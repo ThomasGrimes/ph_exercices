@@ -5,6 +5,8 @@ Module de création de la classe Client
 
 """
 
+lst_client = []
+
 class Clients:
     def __init__(self, name, credits):
         self.name = name

@@ -8,6 +8,7 @@ Données médicaments : Nom - prix - stocks
 """
 
 import tkinter
+from tkinter import messagebox
 #import des modules customs
 import clients
 import medicaments
@@ -22,12 +23,14 @@ def win_new_client():
     win_nClient.title("Nouveau Client")
     # Widgets
     new_client_name_label = tkinter.Label(win_nClient, text="Entrer le nom du client ")
+    global new_client_name_entry
     new_client_name_entry = tkinter.Entry(win_nClient)
     new_client_credit_label = tkinter.Label(win_nClient, text="Entrer le crédit du client ")
+    global new_client_credit_entry
     new_client_credit_entry = tkinter.Entry(win_nClient)
-    new_client_valid = tkinter.Button(win_nClient, text="Valider")
+    new_client_valid = tkinter.Button(win_nClient, text="Valider", command=nouveau_client)
     new_client_quit = tkinter.Button(win_nClient, text="Annuler", command=win_nClient.destroy)
-    #Positionnement
+    # Positionnement
     new_client_name_label.pack()
     new_client_name_entry.pack()
     new_client_credit_label.pack()
@@ -35,6 +38,25 @@ def win_new_client():
     new_client_valid.pack()
     new_client_quit.pack()
 
+# Fonction de définition d'un nouveau client
+
+def nouveau_client():
+    nom = new_client_name_entry.get()
+    credit = new_client_credit_entry.get()
+    try:
+        credit = float(credit)
+        nom = nom.lower()
+
+        controls_entry.verif_name(nom)
+
+        client = clients.Clients(nom, credit)
+        clients.lst_client.append(client)
+        controls_entry.log(f"{client.name} : {client.credits}")
+        new_client_name_entry.delete(0, tkinter.END)
+        new_client_credit_entry.delete(0, tkinter.END)
+
+    except ValueError:
+        messagebox.showerror(title="Erreur", message="Valeur invalide")
 
 root = tkinter.Tk()
 root.title("Pharma Gestion")
