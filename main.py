@@ -13,6 +13,28 @@ import clients
 import medicaments
 import controls_entry
 
+# fenetre nouveau client
+
+def win_new_client():
+    # Fenetre
+    win_nClient = tkinter.Toplevel(root)
+    win_nClient.geometry(f"300x200+{posX}+{posY}")
+    win_nClient.title("Nouveau Client")
+    # Widgets
+    new_client_name_label = tkinter.Label(win_nClient, text="Entrer le nom du client ")
+    new_client_name_entry = tkinter.Entry(win_nClient)
+    new_client_credit_label = tkinter.Label(win_nClient, text="Entrer le crédit du client ")
+    new_client_credit_entry = tkinter.Entry(win_nClient)
+    new_client_valid = tkinter.Button(win_nClient, text="Valider")
+    new_client_quit = tkinter.Button(win_nClient, text="Annuler", command=win_nClient.destroy)
+    #Positionnement
+    new_client_name_label.pack()
+    new_client_name_entry.pack()
+    new_client_credit_label.pack()
+    new_client_credit_entry.pack()
+    new_client_valid.pack()
+    new_client_quit.pack()
+
 
 root = tkinter.Tk()
 root.title("Pharma Gestion")
@@ -36,5 +58,9 @@ console_frame.pack(side="bottom", padx=15, pady=15, ipadx=15, ipady=15, fill="x"
 console = tkinter.Label(console_frame, text="test", bg="white", fg="red")
 console.pack()
 
+# Bouton pour création nouveau client
+
+new_client = tkinter.Button(root, text="Nouveau client", command = win_new_client)
+new_client.pack()
 
 root.mainloop()

@@ -12,7 +12,9 @@ class Medicaments:
         self.stock = stock
 
     def affichage(self):
-        #affiche le nom du medicaments et sont stock
+        pass
+#affiche le nom du medicaments et sont stock
 
     def approvisionnement(self):
-        # check le nom du medicaments et ajoute la quantité set()*
+        pass
+# check le nom du medicaments et ajoute la quantité set()*
