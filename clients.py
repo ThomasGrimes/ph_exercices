@@ -4,3 +4,5 @@
 Module de création de la classe Client
 
 """
+
+class Clients:
