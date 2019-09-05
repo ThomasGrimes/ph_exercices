@@ -63,7 +63,7 @@ def nouveau_client():
         clients.lst_client.append(client)
         controls_entry.log(f"{client.name} : {client.credits}")
         client.save()
-        var_label.set(f"Le client {client.name} a bien été créé. Son crédit est de {client.credits}")
+        var_message.set(f"Le client {client.name} a bien été créé. Son crédit est de {client.credits}")
     except ValueError:
         messagebox.showerror(title="Erreur", message="Valeur invalide")
     except AssertionError:
@@ -72,6 +72,24 @@ def nouveau_client():
     finally:
         new_client_name_entry.delete(0, tkinter.END)
         new_client_credit_entry.delete(0, tkinter.END)
+
+# Fonction d'inventaire client
+
+def inv_client():
+    entry_name_client = inv_entry.get()
+    if entry_name_client != "":
+        ok = controls_entry.verif_name(entry_name_client)
+        if ok == False:
+            for client in clients.lst_client:
+                if client.name == entry_name_client:
+                    var_message.set(f"Le client {client.name} possède un crédit de {client.credits}")
+        else:
+            var_message.set(f"le client {entry_name_client} n'existe pas")
+    else:
+        var_transit = ""
+        for client in clients.lst_client:
+            var_transit += f"Le client {client.name} possède un crédit de {client.credits}\n"
+        var_message.set(var_transit)
 
 # --------------------------------------------------- MAIN CODE ---------------------------------------------------
 
@@ -89,19 +107,28 @@ posY = (screen_y // 2)-(windows_y // 2)
 center = f"{windows_x}x{windows_y}+{posX}+{posY}"
 root.geometry(center)
 
-# Frame d'affichage des données
+# Frame Console
 
-console_frame = tkinter.LabelFrame(root, text="Console", labelanchor="n")
-console_frame.pack(side="bottom", padx=15, pady=15, ipadx=15, ipady=15, fill="x")
-
-var_label = tkinter.StringVar()
-console = tkinter.Label(console_frame, textvariable=var_label, bg="white", fg="red")
-var_label.trace("w", nouveau_client)
-console.pack()
+console_frame = tkinter.LabelFrame(root, text="Console", labelanchor="n", bg="white")
+console_frame.pack(side="bottom", expand=True, padx=15, pady=15, ipadx=5, ipady=5, fill="both")
 
 # Bouton pour création nouveau client
 
 new_client = tkinter.Button(root, text="Nouveau client", command = win_new_client)
 new_client.pack()
+
+# listing client et crédit d'un ou tout les clients
+
+inv_client = tkinter.Button(root, text="client", command=inv_client)
+inv_entry = tkinter.Entry(root)
+inv_client.pack(side="left")
+inv_entry.pack(side="left")
+
+# Console
+
+var_message = tkinter.StringVar()
+console = tkinter.Message(console_frame, textvariable=var_message, bg="white", fg="red", width=500)
+var_message.trace("w", nouveau_client)
+console.pack(expand=True)
 
 root.mainloop()
