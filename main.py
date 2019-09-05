@@ -6,6 +6,7 @@ Données clients     : Nom - Crédits du - médicaments acheter - nb de medciame
 Données médicaments : Nom - prix - stocks
 
 """
+# --------------------------------------------------- MODULES ---------------------------------------------------
 
 import tkinter
 from tkinter import messagebox
@@ -13,6 +14,13 @@ from tkinter import messagebox
 import clients
 import medicaments
 import controls_entry
+
+# --------------------------------------------------- LOAD DATA ---------------------------------------------------
+try:controls_entry.load_data("data/clients.data")
+except EOFError:
+    pass
+
+# --------------------------------------------------- WINDOWS ---------------------------------------------------
 
 # fenetre nouveau client
 
@@ -38,6 +46,8 @@ def win_new_client():
     new_client_valid.pack()
     new_client_quit.pack()
 
+# --------------------------------------------------- FONCTIONS ---------------------------------------------------
+
 # Fonction de définition d'un nouveau client
 
 def nouveau_client():
@@ -47,16 +57,23 @@ def nouveau_client():
         credit = float(credit)
         nom = nom.lower()
 
-        controls_entry.verif_name(nom)
-
+        ok = controls_entry.verif_name(nom)
+        assert  ok == True
         client = clients.Clients(nom, credit)
         clients.lst_client.append(client)
         controls_entry.log(f"{client.name} : {client.credits}")
+        client.save()
+        var_label.set(f"Le client {client.name} a bien été créé. Son crédit est de {client.credits}")
+    except ValueError:
+        messagebox.showerror(title="Erreur", message="Valeur invalide")
+    except AssertionError:
+        messagebox.showwarning(title="Alerte", message="Le client existe deja !")
+        controls_entry.log(f"{nom} existe deja")
+    finally:
         new_client_name_entry.delete(0, tkinter.END)
         new_client_credit_entry.delete(0, tkinter.END)
 
-    except ValueError:
-        messagebox.showerror(title="Erreur", message="Valeur invalide")
+# --------------------------------------------------- MAIN CODE ---------------------------------------------------
 
 root = tkinter.Tk()
 root.title("Pharma Gestion")
@@ -77,7 +94,9 @@ root.geometry(center)
 console_frame = tkinter.LabelFrame(root, text="Console", labelanchor="n")
 console_frame.pack(side="bottom", padx=15, pady=15, ipadx=15, ipady=15, fill="x")
 
-console = tkinter.Label(console_frame, text="test", bg="white", fg="red")
+var_label = tkinter.StringVar()
+console = tkinter.Label(console_frame, textvariable=var_label, bg="white", fg="red")
+var_label.trace("w", nouveau_client)
 console.pack()
 
 # Bouton pour création nouveau client

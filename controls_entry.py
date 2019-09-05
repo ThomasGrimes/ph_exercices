@@ -6,7 +6,7 @@ Module de controles des entrées utilisateurs
 """
 import datetime
 import clients
-from tkinter import messagebox
+import pickle
 
 # Enregistrement des logs
 
@@ -15,16 +15,22 @@ def log(record):
     with open("data/log.txt", "a") as file:
         file.write(f"{log_time} >>> {record}\n")
 
+# Vérification de l'existance du client
 def verif_name(name):
+    ok = True
     for obj in clients.lst_client:
-        name = name.lower()
         if name == obj.name:
-            log(f"{name} existe deja")
-            messagebox.showwarning(title="Alerte", message="Le client existe deja !")
-            return False
-        else:
-            return True
+            ok = False
+    return ok
 
+# Chargement du fichier client
+
+def load_data(directory_file):
+    with open(f"{directory_file}", "rb") as file:
+        datas = pickle.Unpickler(file).load()
+        print(datas)
+        for obj in datas:
+            clients.lst_client.append(obj)
 
 def lireClient(client):
     pass

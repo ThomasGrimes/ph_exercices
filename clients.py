@@ -4,7 +4,7 @@
 Module de création de la classe Client
 
 """
-
+import pickle
 lst_client = []
 
 class Clients:
@@ -20,3 +20,7 @@ class Clients:
     def achat(self, medoc, quantite):
         pass
 
+    def save(self):
+        with open("data/clients.data", "wb") as backup:
+            record = pickle.Pickler(backup)
+            record.dump(lst_client)
