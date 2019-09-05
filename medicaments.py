@@ -4,6 +4,7 @@
 Module de création de la classe MEDICAMENT
 
 """
+lst_medic = []
 
 class Medicaments:
     def __init__(self, name, price, stock):

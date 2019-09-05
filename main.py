@@ -16,15 +16,19 @@ import medicaments
 import controls_entry
 
 # --------------------------------------------------- LOAD DATA ---------------------------------------------------
-try:controls_entry.load_data("data/clients.data")
+try:
+    controls_entry.load_data("data/clients.data")
+    controls_entry.load_data("data/medicaments.data")
 except EOFError:
     pass
 
 # --------------------------------------------------- WINDOWS ---------------------------------------------------
 
-# fenetre nouveau client
-
 def win_new_client():
+"""
+Fenetre tkinter de définission d'un nouveau client
+
+"""
     # Fenetre
     win_nClient = tkinter.Toplevel(root)
     win_nClient.geometry(f"300x200+{posX}+{posY}")
@@ -46,36 +50,131 @@ def win_new_client():
     new_client_valid.pack()
     new_client_quit.pack()
 
+def win_new_medicament():
+"""
+Fenetre de définission d'un nouveau medicament
+
+"""
+    # Fenetre
+    win_nMedoc = tkinter.Toplevel(root)
+    win_nMedoc.geometry(f"300x200+{posX}+{posY}")
+    win_nMedoc.title("Nouveau medicament")
+    # Widgets
+    new_medoc_name_label = tkinter.Label(win_nMedoc, text="Entrer le nom du medicament ")
+    global new_medoc_name_entry
+    new_medoc_name_entry = tkinter.Entry(win_nMedoc)
+    new_medoc_price_label = tkinter.Label(win_nMedoc, text="Entrer le prix unitaire du medicament ")
+    global new_medoc_price_entry
+    new_medoc_price_entry = tkinter.Entry(win_nMedoc)
+    new_medoc_quantity_label = tkinter.Label(win_nMedoc, text="Entrer la quantité")
+    global new_medoc_quantity_entry
+    new_medoc_quantity_entry = tkinter.Entry(win_nMedoc)
+    new_medoc_valid = tkinter.Button(win_nMedoc, text="Valider", command=nouveau_medoc)
+    new_medoc_quit = tkinter.Button(win_nMedoc, text="Annuler", command=win_nMedoc.destroy)
+    # Positionnement
+    new_medoc_name_label.pack()
+    new_medoc_name_entry.pack()
+    new_medoc_price_label.pack()
+    new_medoc_price_entry.pack()
+    new_medoc_quantity_label.pack()
+    new_medoc_quantity_entry.pack()
+    new_medoc_valid.pack()
+    new_medoc_quit.pack()
+
+
 # --------------------------------------------------- FONCTIONS ---------------------------------------------------
 
-# Fonction de définition d'un nouveau client
-
 def nouveau_client():
+"""
+Fonction de création d'un nouveau client :
+
+     - Recupère les Entry "new_client_name_entry" & "new_client_credit_entry"
+     - Lance un block try pour vérification
+     - Envoi le nom en controle pour vérification de la non existence du client
+     - Ajout le client a la liste
+     - Renseigne les logs du traitement Ok ou Erreur
+     - Lance la fonction de sauvegarde dans le fichier clients.data en byte
+     - Fini en vidant les champs
+"""
     nom = new_client_name_entry.get()
     credit = new_client_credit_entry.get()
     try:
         credit = float(credit)
         nom = nom.lower()
 
-        ok = controls_entry.verif_name(nom)
+        ok = controls_entry.verif_name(nom, clients.lst_client)
         assert  ok == True
         client = clients.Clients(nom, credit)
         clients.lst_client.append(client)
         controls_entry.log(f"{client.name} : {client.credits}")
-        client.save()
+        controls_entry.save("clients", clients.lst_client)
         var_message.set(f"Le client {client.name} a bien été créé. Son crédit est de {client.credits}")
     except ValueError:
         messagebox.showerror(title="Erreur", message="Valeur invalide")
     except AssertionError:
         messagebox.showwarning(title="Alerte", message="Le client existe deja !")
-        controls_entry.log(f"{nom} existe deja")
+        controls_entry.log(f"ERREUR : {nom} existe deja")
     finally:
         new_client_name_entry.delete(0, tkinter.END)
         new_client_credit_entry.delete(0, tkinter.END)
 
-# Fonction d'inventaire client
+def nouveau_medoc():
+"""
+Fonction de création d'un nouveau medicament :
+
+     - Recupère les Entry "new_medoc_name_entry", "new_medoc_quantity_entry" & "new_medoc_price_entry"
+     - Lance un block try pour vérification avec des raise pour la vérification de la bonne valeur du prix et stock
+     - Envoi le nom en controle pour vérification de la non existence du medicament
+     - Ajout le medicament a la liste
+     - Renseigne les logs du traitement Ok ou Erreur
+     - Lance la fonction de sauvegarde dans le fichier medicaments.data en byte
+     - Fini en vidant les champs
+
+"""
+    nom = new_medoc_name_entry.get()
+    price = new_medoc_price_entry.get()
+    stock = new_medoc_quantity_entry.get()
+
+    try:
+        price = float(price)
+        stock = int(stock)
+        nom = nom.lower()
+        if stock < 0:
+            raise ValueError
+        if price < 0:
+            raise TypeError
+
+        ok = controls_entry.verif_name(nom, medicaments.lst_medic)
+        assert  ok == True
+        medoc = medicaments.Medicaments(nom, price, stock)
+        medicaments.lst_medic.append(medoc)
+        controls_entry.log(f"{medoc.name} :  prix - {medoc.price} / stock - {medoc.stock}")
+        controls_entry.save("medicaments", medicaments.lst_medic)
+        var_message.set(f"Le medicament \"{medoc.name}\" a bien été créé. Son stock est de {medoc.stock} au prix unitaire de {medoc.price}")
+    except ValueError:
+        messagebox.showerror(title="Erreur", message="La valeur du stock ne peut être négative")
+    except TypeError:
+        messagebox.showwarning(title="Alerte", message="Le prix ne peut être a négatif")
+    except AssertionError:
+        messagebox.showwarning(title="Alerte", message="Le medicament existe deja !")
+        controls_entry.log(f"ERREUR : {nom} existe deja")
+    finally:
+        new_medoc_name_entry.delete(0, tkinter.END)
+        new_medoc_price_entry.delete(0, tkinter.END)
+        new_medoc_quantity_entry.delete(0, tkinter.END)
 
 def inv_client():
+"""
+Fonction inventoriant le(s) client(s) et renvoyant l'information dans la console
+
+
+    - Si le champ est vide : Tous les clients sont renvoyés dans la console
+    - Si le champ est remplit :
+
+        - Vérifie que le client existe
+        - Renvoi dans la console le client mentionné uniquement
+
+"""
     entry_name_client = inv_entry.get()
     if entry_name_client != "":
         ok = controls_entry.verif_name(entry_name_client)
@@ -91,7 +190,7 @@ def inv_client():
             var_transit += f"Le client {client.name} possède un crédit de {client.credits}\n"
         var_message.set(var_transit)
 
-# --------------------------------------------------- MAIN CODE ---------------------------------------------------
+# --------------------------------------------------- MAIN WINDOW ---------------------------------------------------
 
 root = tkinter.Tk()
 root.title("Pharma Gestion")
@@ -116,6 +215,11 @@ console_frame.pack(side="bottom", expand=True, padx=15, pady=15, ipadx=5, ipady=
 
 new_client = tkinter.Button(root, text="Nouveau client", command = win_new_client)
 new_client.pack()
+
+# Bouton pour création nouveau medicaments
+
+new_medoc = tkinter.Button(root, text="Nouveau medicaments", command = win_new_medicament)
+new_medoc.pack()
 
 # listing client et crédit d'un ou tout les clients
 

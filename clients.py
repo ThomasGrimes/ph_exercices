@@ -4,7 +4,6 @@
 Module de création de la classe Client
 
 """
-import pickle
 lst_client = []
 
 class Clients:
@@ -19,8 +18,3 @@ class Clients:
 # definit l'achat du medicament avec la quantite a soustraire et le prix a ajouter au credit du client
     def achat(self, medoc, quantite):
         pass
-
-    def save(self):
-        with open("data/clients.data", "wb") as backup:
-            record = pickle.Pickler(backup)
-            record.dump(lst_client)
