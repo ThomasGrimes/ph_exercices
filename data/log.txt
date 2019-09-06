@@ -1,0 +1,7 @@
+2019-09-06 17:03:29.223017 >>> OK : Inventaire OK
+2019-09-06 17:03:46.670185 >>> OK : Inventaire OK
+2019-09-06 17:04:38.629553 >>> OK : Inventaire OK
+2019-09-06 17:05:26.334898 >>> OK : Inventaire OK
+2019-09-06 17:05:52.981371 >>> OK : Inventaire OK
+2019-09-06 17:06:06.096336 >>> OK : Inventaire OK
+2019-09-06 17:15:36.513049 >>> OK : Inventaire OK
