@@ -1,7 +1,46 @@
-2019-09-06 17:03:29.223017 >>> OK : Inventaire OK
-2019-09-06 17:03:46.670185 >>> OK : Inventaire OK
-2019-09-06 17:04:38.629553 >>> OK : Inventaire OK
-2019-09-06 17:05:26.334898 >>> OK : Inventaire OK
-2019-09-06 17:05:52.981371 >>> OK : Inventaire OK
-2019-09-06 17:06:06.096336 >>> OK : Inventaire OK
-2019-09-06 17:15:36.513049 >>> OK : Inventaire OK
+2019-09-10 16:27:30.513635 >>> OK : Inventaire OK
+2019-09-10 16:27:48.257096 >>> ENREGISTREMENT OK : Medic :  prix - 5.0 / stock - 10
+2019-09-10 16:27:51.984750 >>> OK : Inventaire OK
+2019-09-10 16:30:06.080514 >>> ERREUR : toto existe deja
+2019-09-10 16:30:14.877850 >>> OK : Inventaire OK
+2019-09-10 16:30:27.174422 >>> OK : Inventaire OK
+2019-09-10 16:30:46.438493 >>> ENREGISTREMENT OK : <built-in method capitalize of str object at 0x03751FE0> : 15.0
+2019-09-10 16:34:03.394634 >>> OK : Inventaire OK
+2019-09-10 16:34:06.696456 >>> OK : Inventaire OK
+2019-09-10 16:34:07.165714 >>> OK : Inventaire OK
+2019-09-10 16:34:07.338819 >>> OK : Inventaire OK
+2019-09-10 16:34:07.510682 >>> OK : Inventaire OK
+2019-09-10 16:34:07.682544 >>> OK : Inventaire OK
+2019-09-10 16:34:07.854405 >>> OK : Inventaire OK
+2019-09-10 16:34:08.026268 >>> OK : Inventaire OK
+2019-09-10 16:36:53.925768 >>> OK : Inventaire OK
+2019-09-10 16:36:56.263587 >>> OK : Inventaire OK
+2019-09-10 16:37:11.860594 >>> ENREGISTREMENT OK : <built-in method capitalize of str object at 0x02D93BE0> : 15.0
+2019-09-10 16:37:21.552291 >>> OK : Inventaire OK
+2019-09-10 16:37:48.563314 >>> ENREGISTREMENT OK : Toto : 15.0
+2019-09-10 16:38:00.829699 >>> ENREGISTREMENT OK : Tata : 10.0
+2019-09-10 16:38:07.993243 >>> ENREGISTREMENT OK : Titi : 20.0
+2019-09-10 16:38:16.220005 >>> OK : Inventaire OK
+2019-09-10 16:38:39.570284 >>> ENREGISTREMENT OK : Medic :  prix - 5.0 / stock - 10
+2019-09-10 16:38:45.832622 >>> OK : Inventaire OK
+2019-09-10 16:38:47.948467 >>> OK : Inventaire OK
+2019-09-10 16:38:59.769911 >>> OK : Inventaire OK
+2019-09-10 16:39:17.782017 >>> OK : Inventaire OK
+2019-09-10 16:44:34.157593 >>> OK : Inventaire OK
+2019-09-10 16:46:20.488301 >>> OK : Inventaire OK
+2019-09-10 16:50:43.156905 >>> OK : Inventaire OK
+2019-09-10 16:50:53.379683 >>> ENREGISTREMENT OK : Medic :  prix - 5.0 / stock - 10
+2019-09-10 16:51:00.754029 >>> OK : Inventaire OK
+2019-09-10 16:55:16.351970 >>> OK : Inventaire OK
+2019-09-10 18:06:41.077439 >>> OK : Inventaire OK
+2019-09-10 18:07:09.589306 >>> OK : Inventaire OK
+2019-09-10 18:14:09.778249 >>> OK : Inventaire OK
+2019-09-10 18:24:58.409328 >>> OK : Inventaire OK
+2019-09-10 18:25:25.880822 >>> OK : Inventaire OK
+2019-09-10 18:32:50.905463 >>> OK : Inventaire OK
+2019-09-10 18:40:45.331527 >>> OK : Inventaire OK
+2019-09-10 18:40:58.575197 >>> MODIFICATION : Le nouveau nom du client toto est popo
+2019-09-10 18:41:00.427122 >>> OK : Inventaire OK
+2019-09-10 18:41:24.932794 >>> OK : Inventaire OK
+2019-09-10 18:44:05.328284 >>> Le nouveau crédit du client toto est de 16.0
+2019-09-10 18:44:07.489861 >>> OK : Inventaire OK

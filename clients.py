@@ -10,9 +10,28 @@ import controls_entry
 lst_client = []
 
 class Clients:
+
     def __init__(self, name, credits):
-        self.name = name
-        self.credits = credits
+        self._name = name
+        self._credits = credits
+
+    def _getName(self):
+        return self._name.capitalize()
+
+    def _setName(self, new_name):
+        controls_entry.log(f"MODIFICATION : Le nouveau nom du client {self._name} est {new_name}")
+        self._name = new_name.lower()
+
+    def _getCredits(self):
+        return self._credits
+
+    def _setCredits(self, add_credits):
+        if add_credits > 0:
+            self._credits += add_credits
+            controls_entry.log(f"Le nouveau crédit du client {self._name} est de {self._credits}")
+
+    name = property(_getName, _setName)
+    credits = property(_getCredits, _setCredits)
 
 # definit l'achat du medicament avec la quantite a soustraire et le prix a ajouter au credit du client
     def achat(self, medoc, quantite):

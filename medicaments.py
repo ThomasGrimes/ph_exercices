@@ -8,14 +8,19 @@ lst_medic = []
 
 class Medicaments:
     def __init__(self, name, price, stock):
-        self.name = name
-        self.price = price
-        self.stock = stock
+        self._name = name
+        self._price = price
+        self._stock = stock
 
-    def affichage(self):
-        pass
-#affiche le nom du medicaments et sont stock
+    def _getName(self):
+        return self._name.capitalize()
 
-    def approvisionnement(self):
-        pass
-# check le nom du medicaments et ajoute la quantité set()*
+    def _getPrice(self):
+        return self._price
+
+    def _getStock(self):
+        return self._stock
+
+    name = property(_getName)
+    price = property(_getPrice)
+    stock = property(_getStock)

@@ -5,7 +5,6 @@ Module de controles des entrées utilisateurs
 
 """
 import datetime
-import clients
 import pickle
 
 def log(record):
@@ -35,10 +34,10 @@ def verif_name(name, lst):
     name = name.lower()
     ok = False
     for obj in lst:
-        if name == obj.name:
+        if name == obj.name.lower():
             ok = True
             return ok, obj
-    return ok
+    return ok, "vide"
 
 def load_data(directory_file, lst):
     """
@@ -52,15 +51,19 @@ def load_data(directory_file, lst):
         Celle ci est appelé au début du programme
 
     """
-    with open(f"{directory_file}", "rb") as file:
-        datas = pickle.Unpickler(file).load()
-        for obj in datas:
-            lst.append(obj)
+    try:
+        with open(f"{directory_file}", "rb") as file:
+            datas = pickle.Unpickler(file).load()
+            for obj in datas:
+                lst.append(obj)
+    except FileNotFoundError:
+        pass
+    except EOFError:
+        pass
 
 def save(file, backup_file):
     """
     Fonction de sauvegarde des données dans les fichiers "clients.data" & "medicaments.data"
-
 
         Prend en paramètres :
             - Le nom du fichier cible (Ex : "medicaments", intégrer les doubleQuotes)
@@ -73,3 +76,7 @@ def save(file, backup_file):
     with open(cible, "wb") as backup:
         record = pickle.Pickler(backup)
         record.dump(backup_file)
+
+# --------------------------------------- TEST -------------------------------------------------
+if __name__ == '__main__':
+    pass
