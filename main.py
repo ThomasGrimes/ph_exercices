@@ -10,6 +10,7 @@ Données médicaments : Nom - prix - stocks
 
 import tkinter
 from tkinter import messagebox
+from tkinter import ttk
 #import des modules customs
 import clients
 import medicaments
@@ -90,22 +91,28 @@ def win_buy():
     win_buy.geometry(f"300x200+{posX}+{posY}")
     win_buy.title("Achat")
     # Widgets
-    win_buy_name_client_label = tkinter.Label(win_buy, text="Entrer le nom du client")
-    win_buy_name_medoc_label = tkinter.Label(win_buy, text="Entrer le nom du medicament")
+    win_buy_name_client_label = tkinter.Label(win_buy, text="Selectionner le nom du client")
+    win_buy_name_medoc_label = tkinter.Label(win_buy, text="Selectionner le nom du medicament")
     win_buy_quantity_medoc_label = tkinter.Label(win_buy, text="Entrer la quantité")
-    global win_buy_name_client_entry
-    win_buy_name_client_entry = tkinter.Entry(win_buy)
-    global win_buy_name_medoc_entry
-    win_buy_name_medoc_entry = tkinter.Entry(win_buy)
+    global win_buy_name_client_cbbox
+    win_buy_lst_client_name = []
+    for client in clients.lst_client:
+        win_buy_lst_client_name.append(client.name.capitalize())
+    win_buy_name_client_cbbox = ttk.Combobox(win_buy, value=win_buy_lst_client_name)
+    global win_buy_name_medoc_cbbox
+    win_buy_lst_medoc_name = []
+    for medoc in medicaments.lst_medic:
+        win_buy_lst_medoc_name.append(medoc.name.capitalize())
+    win_buy_name_medoc_cbbox = ttk.Combobox(win_buy, value=win_buy_lst_medoc_name)
     global win_buy_quantity_medoc_entry
     win_buy_quantity_medoc_entry = tkinter.Entry(win_buy)
     win_buy_valid = tkinter.Button(win_buy, text="Valider", command=buy_medoc)
     win_buy_quit = tkinter.Button(win_buy, text="Quitter", command=win_buy.destroy)
     # Positionnement
     win_buy_name_client_label.pack()
-    win_buy_name_client_entry.pack()
+    win_buy_name_client_cbbox.pack()
     win_buy_name_medoc_label.pack()
-    win_buy_name_medoc_entry.pack()
+    win_buy_name_medoc_cbbox.pack()
     win_buy_quantity_medoc_label.pack()
     win_buy_quantity_medoc_entry.pack()
     win_buy_valid.pack()
@@ -132,7 +139,7 @@ def nouveau_client():
         nom = nom.lower()
 
         ok = controls_entry.verif_name(nom, clients.lst_client)
-        assert  ok == True
+        assert ok == False
         client = clients.Clients(nom, credit)
         clients.lst_client.append(client)
         controls_entry.log(f"ENREGISTREMENT OK : {client.name} : {client.credits}")
@@ -175,7 +182,7 @@ def nouveau_medoc():
             raise TypeError
 
         ok = controls_entry.verif_name(nom, medicaments.lst_medic)
-        assert  ok == True
+        assert  ok == False
         medoc = medicaments.Medicaments(nom, price, stock)
         medicaments.lst_medic.append(medoc)
         controls_entry.log(f"ENREGISTREMENT OK : {medoc.name.capitalize()} :  prix - {medoc.price} / stock - {medoc.stock}")
@@ -209,18 +216,14 @@ def inv_client():
     """
     entry_search = inv_entry.get()
     if entry_search != "":
-        ok_client = controls_entry.verif_name(entry_search, clients.lst_client)
-        ok_medoc = controls_entry.verif_name(entry_search, medicaments.lst_medic)
-        if ok_client == False:
-            for client in clients.lst_client:
-                if client.name == entry_search:
-                    var_text.set(f"Le client {client.name.capitalize()} possède un crédit de {client.credits}€")
-                    controls_entry.log(f"OK : Le client {client.name.capitalize()} possède un crédit de {client.credits}€")
-        elif ok_medoc == False:
-            for medoc in medicaments.lst_medic:
-                if medoc.name == entry_search:
-                    var_text.set(f"{medoc.name.capitalize()} : le stock est de {medoc.stock} au prix unitaire de {medoc.price}€")
-                    controls_entry.log(f"OK : {medoc.name.capitalize()} : le stock est de {medoc.stock} au prix unitaire de {medoc.price}€")
+        ok_client, client = controls_entry.verif_name(entry_search, clients.lst_client)
+        ok_medoc, medoc = controls_entry.verif_name(entry_search, medicaments.lst_medic)
+        if ok_client:
+            var_text.set(f"Le client {client.name.capitalize()} possède un crédit de {client.credits}€")
+            controls_entry.log(f"OK : Le client {client.name.capitalize()} possède un crédit de {client.credits}€")
+        elif ok_medoc:
+            var_text.set(f"{medoc.name.capitalize()} : le stock est de {medoc.stock} au prix unitaire de {medoc.price}€")
+            controls_entry.log(f"OK : {medoc.name.capitalize()} : le stock est de {medoc.stock} au prix unitaire de {medoc.price}€")
         else:
             var_text.set(f"le client ou le medicaments \"{entry_search}\" n'existe pas")
             controls_entry.log(f"ERREUR : le client ou le medicaments \"{entry_search}\" n'existe pas")
@@ -246,33 +249,19 @@ def buy_medoc():
         Execute la méthode "achat" de la classe Clients.
 
     """
-    medoc_name = win_buy_name_medoc_entry.get()
-    client_name = win_buy_name_client_entry.get()
+    medoc_name = win_buy_name_medoc_cbbox.get()
+    client_name = win_buy_name_client_cbbox.get()
     medoc_quantity = win_buy_quantity_medoc_entry.get()
 
     try:
-        medoc_name = medoc_name.lower()
-        client_name = client_name.lower()
         medoc_quantity = int(medoc_quantity)
 
         assert medoc_quantity > 0
-        ok_client = controls_entry.verif_name(client_name, clients.lst_client)
-        ok_medoc = controls_entry.verif_name(medoc_name, medicaments.lst_medic)
-        if ok_client == False:
-            if ok_medoc == False:
-                for client_obj in clients.lst_client:
-                    if client_name == client_obj.name:
-                        old_credit = client_obj.credits
-                        client_obj.achat(medoc_name, medoc_quantity)
-                        var_text.set(f"Achat effectué : {client_name.capitalize()} a acheté {medoc_quantity} de {medoc_name.capitalize()}. \nLe nouveau solde client est de {client_obj.credits}€")
-                        controls_entry.log(f"OK : {client_name.capitalize()} a acheté {medoc_quantity} de {medoc_name.capitalize()}\nAncien solde : {old_credit}\nNouveau solde : {client_obj.credits}")
-            else:
-                messagebox.showerror(title="Erreur", message="Le medicament n'existe pas")
-                controls_entry.log(f"ERREUR : \"{medoc_name.capitalize()}\" n'existe pas")
-        else:
-            messagebox.showerror(title="Erreur", message="Le client n'existe pas")
-            controls_entry.log(f"ERREUR : \"{client_name.capitalize()}\" n'existe pas")
-
+        ok , client = controls_entry.verif_name(client_name, clients.lst_client)
+        old_credit = client.credits
+        client.achat(medoc_name, medoc_quantity)
+        var_text.set(f"Achat effectué : {client_name.capitalize()} a acheté {medoc_quantity} boîte(s) de {medoc_name.capitalize()}. \nLe nouveau solde client est de {client.credits}€")
+        controls_entry.log(f"OK : {client_name.capitalize()} a acheté {medoc_quantity} de {medoc_name.capitalize()}\nAncien solde : {old_credit}\nNouveau solde : {client.credits}")
     except ValueError:
         messagebox.showerror(title="Erreur", message="Valeur invalide")
         controls_entry.log(f"ERREUR : Valeur invalide")
@@ -280,8 +269,8 @@ def buy_medoc():
         messagebox.showerror(title="Valeur invalide", message="La quantité doit être supérieur a 0")
         controls_entry.log(f"ERREUR : \"{medoc_quantity}\" doit être supérieur a 0")
     finally:
-        win_buy_name_medoc_entry.delete(0, tkinter.END)
-        win_buy_name_client_entry.delete(0, tkinter.END)
+        win_buy_name_medoc_cbbox.delete(0, tkinter.END)
+        win_buy_name_client_cbbox.delete(0, tkinter.END)
         win_buy_quantity_medoc_entry.delete(0, tkinter.END)
 
 
@@ -325,7 +314,7 @@ buy.pack()
 
 inv_button = tkinter.Button(root, text="Recherche", command=inv_client)
 inv_entry = tkinter.Entry(root)
-inv_label = tkinter.Label(root, text="(Inventaire complet si champs vide)")
+inv_label = tkinter.Label(root, text="*Inventaire complet si le champ est vide")
 inv_button.pack(side="left")
 inv_entry.pack(side="left")
 inv_label.pack(side="left")

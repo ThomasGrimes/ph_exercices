@@ -33,10 +33,11 @@ def verif_name(name, lst):
             - la liste dans laquelle chercher
     """
     name = name.lower()
-    ok = True
+    ok = False
     for obj in lst:
         if name == obj.name:
-            ok = False
+            ok = True
+            return ok, obj
     return ok
 
 def load_data(directory_file, lst):
