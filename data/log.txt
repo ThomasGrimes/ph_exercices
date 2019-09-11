@@ -1,46 +1,58 @@
-2019-09-10 16:27:30.513635 >>> OK : Inventaire OK
-2019-09-10 16:27:48.257096 >>> ENREGISTREMENT OK : Medic :  prix - 5.0 / stock - 10
-2019-09-10 16:27:51.984750 >>> OK : Inventaire OK
-2019-09-10 16:30:06.080514 >>> ERREUR : toto existe deja
-2019-09-10 16:30:14.877850 >>> OK : Inventaire OK
-2019-09-10 16:30:27.174422 >>> OK : Inventaire OK
-2019-09-10 16:30:46.438493 >>> ENREGISTREMENT OK : <built-in method capitalize of str object at 0x03751FE0> : 15.0
-2019-09-10 16:34:03.394634 >>> OK : Inventaire OK
-2019-09-10 16:34:06.696456 >>> OK : Inventaire OK
-2019-09-10 16:34:07.165714 >>> OK : Inventaire OK
-2019-09-10 16:34:07.338819 >>> OK : Inventaire OK
-2019-09-10 16:34:07.510682 >>> OK : Inventaire OK
-2019-09-10 16:34:07.682544 >>> OK : Inventaire OK
-2019-09-10 16:34:07.854405 >>> OK : Inventaire OK
-2019-09-10 16:34:08.026268 >>> OK : Inventaire OK
-2019-09-10 16:36:53.925768 >>> OK : Inventaire OK
-2019-09-10 16:36:56.263587 >>> OK : Inventaire OK
-2019-09-10 16:37:11.860594 >>> ENREGISTREMENT OK : <built-in method capitalize of str object at 0x02D93BE0> : 15.0
-2019-09-10 16:37:21.552291 >>> OK : Inventaire OK
-2019-09-10 16:37:48.563314 >>> ENREGISTREMENT OK : Toto : 15.0
-2019-09-10 16:38:00.829699 >>> ENREGISTREMENT OK : Tata : 10.0
-2019-09-10 16:38:07.993243 >>> ENREGISTREMENT OK : Titi : 20.0
-2019-09-10 16:38:16.220005 >>> OK : Inventaire OK
-2019-09-10 16:38:39.570284 >>> ENREGISTREMENT OK : Medic :  prix - 5.0 / stock - 10
-2019-09-10 16:38:45.832622 >>> OK : Inventaire OK
-2019-09-10 16:38:47.948467 >>> OK : Inventaire OK
-2019-09-10 16:38:59.769911 >>> OK : Inventaire OK
-2019-09-10 16:39:17.782017 >>> OK : Inventaire OK
-2019-09-10 16:44:34.157593 >>> OK : Inventaire OK
-2019-09-10 16:46:20.488301 >>> OK : Inventaire OK
-2019-09-10 16:50:43.156905 >>> OK : Inventaire OK
-2019-09-10 16:50:53.379683 >>> ENREGISTREMENT OK : Medic :  prix - 5.0 / stock - 10
-2019-09-10 16:51:00.754029 >>> OK : Inventaire OK
-2019-09-10 16:55:16.351970 >>> OK : Inventaire OK
-2019-09-10 18:06:41.077439 >>> OK : Inventaire OK
-2019-09-10 18:07:09.589306 >>> OK : Inventaire OK
-2019-09-10 18:14:09.778249 >>> OK : Inventaire OK
-2019-09-10 18:24:58.409328 >>> OK : Inventaire OK
-2019-09-10 18:25:25.880822 >>> OK : Inventaire OK
-2019-09-10 18:32:50.905463 >>> OK : Inventaire OK
-2019-09-10 18:40:45.331527 >>> OK : Inventaire OK
-2019-09-10 18:40:58.575197 >>> MODIFICATION : Le nouveau nom du client toto est popo
-2019-09-10 18:41:00.427122 >>> OK : Inventaire OK
-2019-09-10 18:41:24.932794 >>> OK : Inventaire OK
-2019-09-10 18:44:05.328284 >>> Le nouveau crédit du client toto est de 16.0
-2019-09-10 18:44:07.489861 >>> OK : Inventaire OK
+
+2019-09-11 09:56:26.309121 >>> MODIFICATION : Le nouveau nom du client toto est popo
+2019-09-11 10:02:32.377103 >>> WARNING : le fichier data/medicaments.data ne contient aucune donnée
+2019-09-11 10:11:08.951663 >>> WARNING : le fichier data/clients.data ne contient aucune donnée
+2019-09-11 10:11:08.951663 >>> WARNING : le fichier data/medicaments.data ne contient aucune donnée
+2019-09-11 10:11:28.697625 >>> ENREGISTREMENT OK : Toto : 15.0€
+2019-09-11 10:11:37.761648 >>> ENREGISTREMENT OK : Tata : 10.0€
+2019-09-11 10:11:45.973822 >>> ENREGISTREMENT OK : Titi : 20.0€
+2019-09-11 10:12:01.274267 >>> ENREGISTREMENT OK : Medic :  prix - 10.0€ / stock - 5
+2019-09-11 10:12:22.320350 >>> WARNING : le fichier data/medicaments.data ne contient aucune donnée
+2019-09-11 10:12:32.813542 >>> ENREGISTREMENT OK : Medic :  prix - 5.0€ / stock - 10
+2019-09-11 10:12:37.130054 >>> OK : Inventaire OK
+2019-09-11 10:45:22.792950 >>> OK : Inventaire OK
+2019-09-11 10:46:07.429629 >>> ENREGISTREMENT OK : Ibuprofene :  prix - 5.0€ / stock - 1
+2019-09-11 10:47:38.384167 >>> OK : Inventaire OK
+2019-09-11 10:47:53.715373 >>> ERREUR : La quantité demandé n'est pas disponible
+2019-09-11 10:48:01.967419 >>> OK : Inventaire OK
+2019-09-11 10:49:11.970332 >>> OK : Inventaire OK
+2019-09-11 11:01:37.100295 >>> ERREUR : Valeur invalide
+2019-09-11 11:02:39.693960 >>> ERREUR : Valeur invalide
+2019-09-11 11:07:47.601766 >>> ERREUR : Valeur invalide
+2019-09-11 11:08:30.656204 >>> ERREUR : Valeur invalide
+2019-09-11 11:09:53.209610 >>> ERREUR : Valeur invalide
+2019-09-11 11:10:52.261477 >>> ERREUR : Valeur invalide
+2019-09-11 11:12:33.491606 >>> ERREUR : Valeur invalide
+2019-09-11 11:13:02.833134 >>> ERREUR : Valeur invalide
+2019-09-11 11:15:15.492309 >>> OK : Inventaire OK
+2019-09-11 11:15:51.945293 >>> OK : Inventaire OK
+2019-09-11 11:16:19.646006 >>> OK : Toto a acheté 1 de Ibuprofene
+   Ancien solde : 15.0€€
+   Nouveau solde : 10.0€€
+2019-09-11 11:16:51.111677 >>> OK : Inventaire OK
+2019-09-11 11:17:01.993349 >>> ERREUR : La quantité demandé n'est pas disponible
+2019-09-11 11:17:54.407961 >>> OK : Inventaire OK
+2019-09-11 11:18:04.301950 >>> ERREUR : Il n'y a plus de medicament en stock
+2019-09-11 11:18:28.311094 >>> OK : Inventaire OK
+2019-09-11 11:18:35.712171 >>> ERREUR : La quantité demandé n'est pas disponible
+2019-09-11 11:32:01.423651 >>> INFO : Le nouveau nom du medicament medic est medoc
+2019-09-11 11:32:01.423651 >>> INFO : le nouveau montant unitaire du medicament medoc est de 2 
+2019-09-11 11:32:18.192845 >>> OK : Inventaire OK
+2019-09-11 11:33:10.482923 >>> INFO : Le nouveau nom du medicament medoc est Medic
+2019-09-11 11:33:10.498513 >>> INFO : le nouveau montant unitaire du medicament medic est de 5 
+2019-09-11 11:34:03.675101 >>> ENREGISTREMENT OK : Tutu : 5.0€
+2019-09-11 11:34:18.106446 >>> ENREGISTREMENT OK : Doliprane :  prix - 5.0€ / stock - 5
+2019-09-11 11:40:16.636501 >>> OK : Inventaire OK
+2019-09-11 11:40:29.508272 >>> ENREGISTREMENT OK : Popo : 5.0€
+2019-09-11 11:40:50.258206 >>> ENREGISTREMENT OK : Spasfon :  prix - 10.0€ / stock - 15
+2019-09-11 12:20:43.821692 >>> OK : Inventaire OK
+2019-09-11 12:21:22.048146 >>> WARNING : le fichier data/clients.data ne contient aucune donnée
+2019-09-11 12:21:22.048146 >>> WARNING : le fichier data/medicaments.data ne contient aucune donnée
+2019-09-11 12:21:47.441088 >>> ENREGISTREMENT OK : Toto : 15.0€
+2019-09-11 12:21:57.378390 >>> ENREGISTREMENT OK : Medic :  prix - 5.0€ / stock - 10
+2019-09-11 12:22:00.773963 >>> OK : Inventaire OK
+2019-09-11 12:22:17.316306 >>> OK : Inventaire OK
+2019-09-11 12:25:42.880999 >>> OK : Inventaire OK
+2019-09-11 12:26:51.128093 >>> OK : Ajout de 2 boite(s) de Medic. Nouveau stock : 12
+2019-09-11 12:26:57.311335 >>> OK : Inventaire OK
+2019-09-11 12:27:02.917912 >>> OK : Inventaire OK

@@ -4,6 +4,8 @@
 Module de création de la classe MEDICAMENT
 
 """
+import controls_entry
+
 lst_medic = []
 
 class Medicaments:
@@ -15,12 +17,25 @@ class Medicaments:
     def _getName(self):
         return self._name.capitalize()
 
+    def _setName(self, new_name):
+        controls_entry.log(f"INFO : Le nouveau nom du medicament {self._name} est {new_name}")
+        self._name = new_name.lower()
+
     def _getPrice(self):
-        return self._price
+        var = str(self._price)
+        var += "€"
+        return var
+
+    def _setPrice(self, new_price):
+        self._price = new_price
+        controls_entry.log(f"INFO : le nouveau montant unitaire du medicament {self._name} est de {self._price} ")
 
     def _getStock(self):
         return self._stock
 
-    name = property(_getName)
-    price = property(_getPrice)
-    stock = property(_getStock)
+    def _setStock(self, add):
+        self._stock += add
+
+    name = property(_getName, _setName)
+    price = property(_getPrice, _setPrice)
+    stock = property(_getStock, _setStock)

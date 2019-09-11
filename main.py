@@ -6,6 +6,9 @@ Données clients     : Nom - Crédits du - médicaments acheter - nb de medciame
 Données médicaments : Nom - prix - stocks
 
 """
+#TODO : Position graphique
+#TODO : Action de suppression dans la fenetre edition avec confimation
+
 # --------------------------------------------------- MODULES ---------------------------------------------------
 
 import tkinter
@@ -124,7 +127,7 @@ def win_edit_client():
     win_edit_client_new_name_entry = tkinter.Entry(win_edit_client)
     global win_edit_client_new_credit_spinbx
     win_edit_client_new_credit_spinbx = tkinter.Spinbox(win_edit_client, from_=0, to=1000)
-    win_edit_client_valid = tkinter.Button(win_edit_client, text="Valider", command=fedit_client)
+    win_edit_client_valid = tkinter.Button(win_edit_client, text="Valider", command=lambda:[fedit_client(), win_edit_client.destroy()])
     win_edit_client_quit = tkinter.Button(win_edit_client, text="Quitter", command=win_edit_client.destroy)
     # Positionnement
     win_edit_client_old_name_label.pack()
@@ -136,6 +139,62 @@ def win_edit_client():
     win_edit_client_valid.pack()
     win_edit_client_quit.pack()
 
+def win_edit_medoc():
+    """
+    Fenetre d'edition d'un obj Medicaments
+
+    """
+    #Fenetre
+    win_edit_medoc = tkinter.Toplevel(root)
+    win_edit_medoc.geometry(f"300x200+{posX}+{posY}")
+    win_edit_medoc.title("Edition medicament")
+    # Widgets
+    win_edit_medoc_old_name_label = tkinter.Label(win_edit_medoc, text="Selectionner le medicament a editer")
+    win_edit_medoc_new_name_label = tkinter.Label(win_edit_medoc, text="Entrer le nouveau nom")
+    win_edit_medoc_new_credit_label = tkinter.Label(win_edit_medoc, text="Entrer le nouveau prix du medicament")
+    global win_edit_medoc_old_name_cbbox
+    win_edit_medoc_old_name_cbbox = ttk.Combobox(win_edit_medoc, value=lst_medoc_name)
+    global win_edit_medoc_new_name_entry
+    win_edit_medoc_new_name_entry = tkinter.Entry(win_edit_medoc)
+    global win_edit_medoc_new_price_spinbx
+    win_edit_medoc_new_price_spinbx = tkinter.Spinbox(win_edit_medoc, from_=0, to=1000)
+    win_edit_medoc_valid = tkinter.Button(win_edit_medoc, text="Valider", command=lambda:[fedit_medoc(), win_edit_medoc.destroy()])
+    win_edit_medoc_quit = tkinter.Button(win_edit_medoc, text="Quitter", command=win_edit_medoc.destroy)
+    # Positionnement
+    win_edit_medoc_old_name_label.pack()
+    win_edit_medoc_old_name_cbbox.pack()
+    win_edit_medoc_new_name_label.pack()
+    win_edit_medoc_new_name_entry.pack()
+    win_edit_medoc_new_credit_label.pack()
+    win_edit_medoc_new_price_spinbx.pack()
+    win_edit_medoc_valid.pack()
+    win_edit_medoc_quit.pack()
+
+def win_add_stock():
+    """
+    Fenetre d'approvisionement du stock de medicament
+
+    """
+    # Fenetre
+    win_add_stock = tkinter.Toplevel(root)
+    win_add_stock.geometry(f"300x200+{posX}+{posY}")
+    win_add_stock.title("Approvisionement medicament")
+    # Widgets
+    win_add_stock_medoc_label = tkinter.Label(win_add_stock, text="Selectionner le medicament a approvisionner")
+    win_add_stock_nb_label = tkinter.Label(win_add_stock, text="Indiquer la quantité a ajouter au stock")
+    global win_add_stock_medoc_cbbox
+    win_add_stock_medoc_cbbox = ttk.Combobox(win_add_stock, value=lst_medoc_name)
+    global win_add_stock_nb_spbox
+    win_add_stock_nb_spbox = tkinter.Spinbox(win_add_stock, from_= 0, to=100)
+    win_add_stock_valid = tkinter.Button(win_add_stock, text="Valider", command=add_stock)
+    win_add_stock_quit = tkinter.Button(win_add_stock, text="Quitter", command=win_add_stock.destroy)
+    # Postionnement
+    win_add_stock_medoc_label.pack()
+    win_add_stock_medoc_cbbox.pack()
+    win_add_stock_nb_label.pack()
+    win_add_stock_nb_spbox.pack()
+    win_add_stock_valid.pack()
+    win_add_stock_quit.pack()
 # --------------------------------------------------- FONCTIONS ---------------------------------------------------
 
 def nouveau_client():
@@ -160,9 +219,10 @@ def nouveau_client():
         assert ok == False
         client = clients.Clients(nom, credit)
         clients.lst_client.append(client)
+        lst_client_name.append(client.name)
         controls_entry.log(f"ENREGISTREMENT OK : {client.name} : {client.credits}")
         controls_entry.save("clients", clients.lst_client)
-        var_text.set(f"Le client {client.name} a bien été créé. Son crédit est de {client.credits}€")
+        var_text.set(f"Le client {client.name} a bien été créé. Son crédit est de {client.credits}")
     except ValueError:
         messagebox.showerror(title="Erreur", message="Valeur invalide")
         controls_entry.log(f"ERREUR : {credit} la valeur entré n'est pas valide")
@@ -203,9 +263,10 @@ def nouveau_medoc():
         assert  ok == False
         medoc = medicaments.Medicaments(nom, price, stock)
         medicaments.lst_medic.append(medoc)
+        lst_medoc_name.append(medoc.name)
         controls_entry.log(f"ENREGISTREMENT OK : {medoc.name} :  prix - {medoc.price} / stock - {medoc.stock}")
         controls_entry.save("medicaments", medicaments.lst_medic)
-        var_text.set(f"Le medicament \"{medoc.name}\" a bien été créé. Son stock est de {medoc.stock} au prix unitaire de {medoc.price}€")
+        var_text.set(f"Le medicament \"{medoc.name}\" a bien été créé. Son stock est de {medoc.stock} au prix unitaire de {medoc.price}")
     except ValueError:
         messagebox.showerror(title="Erreur", message="La valeur du stock ne peut être négative")
         controls_entry.log(f"ERREUR : {stock} - La valeur ne peut pas être négative")
@@ -238,11 +299,11 @@ def inv_client():
         ok_client, client = controls_entry.verif_name(entry_search, clients.lst_client)
         ok_medoc, medoc = controls_entry.verif_name(entry_search, medicaments.lst_medic)
         if ok_client:
-            var_text.set(f"Le client {client.name} possède un crédit de {client.credits}€")
-            controls_entry.log(f"OK : Le client {client.name} possède un crédit de {client.credits}€")
+            var_text.set(f"Le client {client.name} possède un crédit de {client.credits}")
+            controls_entry.log(f"OK : Le client {client.name} possède un crédit de {client.credits}")
         elif ok_medoc:
-            var_text.set(f"{medoc.name} : le stock est de {medoc.stock} au prix unitaire de {medoc.price}€")
-            controls_entry.log(f"OK : {medoc.name} : le stock est de {medoc.stock} au prix unitaire de {medoc.price}€")
+            var_text.set(f"{medoc.name} : le stock est de {medoc.stock} au prix unitaire de {medoc.price}")
+            controls_entry.log(f"OK : {medoc.name} : le stock est de {medoc.stock} au prix unitaire de {medoc.price}")
         else:
             var_text.set(f"le client ou le medicaments \"{entry_search}\" n'existe pas")
             controls_entry.log(f"ERREUR : le client ou le medicaments \"{entry_search}\" n'existe pas")
@@ -250,10 +311,10 @@ def inv_client():
         var_transit = ""
         var_transit += f"\n------------------------ Clients -----------------------\n\n"
         for client in clients.lst_client:
-            var_transit += f"Le client {client.name} possède un crédit de {client.credits}€\n"
+            var_transit += f"Le client {client.name} possède un crédit de {client.credits}\n"
         var_transit += f"\n---------------------- Medicaments ---------------------\n\n"
         for medoc in medicaments.lst_medic:
-            var_transit += f"{medoc.name} : le stock est de {medoc.stock} au prix unitaire de {medoc.price}€\n"
+            var_transit += f"{medoc.name} : le stock est de {medoc.stock} au prix unitaire de {medoc.price}\n"
         var_text.set(var_transit)
         controls_entry.log("OK : Inventaire OK")
 
@@ -267,21 +328,26 @@ def buy_medoc():
         Execute la méthode "achat" de la classe Clients.
 
     """
+    #TODO : Historique d'achat
     medoc_name = win_buy_name_medoc_cbbox.get()
     client_name = win_buy_name_client_cbbox.get()
     medoc_quantity = win_buy_quantity_medoc_entry.get()
-
     try:
         medoc_quantity = int(medoc_quantity)
 
         assert medoc_quantity > 0
         ok , client = controls_entry.verif_name(client_name, clients.lst_client)
         old_credit = client.credits
-        client.achat(medoc_name, medoc_quantity)
-        var_text.set(f"Achat effectué : {client_name.capitalize()} a acheté {medoc_quantity} boîte(s) de {medoc_name.capitalize()}. \nLe nouveau solde client est de {client.credits}€")
-        controls_entry.log(f"OK : {client_name.capitalize()} a acheté {medoc_quantity} de {medoc_name.capitalize()}\n   Ancien solde : {old_credit}\n   Nouveau solde : {client.credits}")
+        ok = client.achat(medoc_name, medoc_quantity)
+        if ok == 2:
+            var_text.set("ERREUR : Il n'y a plus de medicament en stock")
+        elif ok == 1:
+            var_text.set("ERREUR : La quantité demandé n'est pas disponible")
+        else:
+            var_text.set(f"Achat effectué : {client.name} a acheté {medoc_quantity} boîte(s) de {medoc_name}. \nLe nouveau solde client est de {client.credits}")
+            controls_entry.log(f"OK : {client.name} a acheté {medoc_quantity} de {medoc_name}\n   Ancien solde : {old_credit}€\n   Nouveau solde : {client.credits}")
     except ValueError:
-        messagebox.showerror(title="Erreur", message="Valeur invalide")
+        messagebox.showerror(title="Erreur", message="Valeur quantité invalide")
         controls_entry.log(f"ERREUR : Valeur invalide")
     except AssertionError:
         messagebox.showerror(title="Valeur invalide", message="La quantité doit être supérieur a 0")
@@ -292,19 +358,85 @@ def buy_medoc():
         win_buy_quantity_medoc_entry.delete(0, tkinter.END)
 
 def fedit_client():
+    """Fonction d'edition client
+
+        Permet d'editer le nom du client via un champs "entry" et créditer son compte
+        Selectionne le nom du client a modifier via une combobox et la lst lst_client_name généré au début de programme
+        Actualise le nom de l'objet dans la liste clients.lst_client
+        Modifie le nom dans la liste lst_client_name
+            Pour le dynamisme de la liste Combobox, si le nom est modifié :
+                - Ferme la fenêtre et la regénère
+        Ajoute le montant choisit via le setter de la prop credit de l'obj client
+        Sauvegarde et fait un retour console
+
+    """
     old_name = win_edit_client_old_name_cbbox.get()
     new_name = win_edit_client_new_name_entry.get()
     new_credit = int(win_edit_client_new_credit_spinbx.get())
     ok, client = controls_entry.verif_name(old_name, clients.lst_client)
+    var_transit = ""
     if new_name != "":
         client.name = new_name
-        #TODO : Save le new name
-        #TODO : Modifier la liste name
-        #TODO : Ajouter le retour console
-    client.credits = new_credit
-    win_edit_client_old_name_cbbox.delete(0, tkinter.END)
-    win_edit_client_new_name_entry.delete(0, tkinter.END)
-    win_edit_client_new_credit_spinbx.delete(0, tkinter.END)
+        controls_entry.save("clients", clients.lst_client)
+        var_transit += f"Le client {old_name} a été renommé en {client.name}\n"
+        ind = lst_client_name.index(old_name)
+        lst_client_name[ind] = client.name
+    if new_credit > 0:
+        client.credits = new_credit
+        var_transit += f"{new_credit}€ ont été ajouté au crédit du client {client.name}. Son nouveau solde est de {client.credits}"
+    var_text.set(var_transit)
+    win_edit_client()
+
+def fedit_medoc():
+    """Fonction d'edition d'un medicament
+
+            Permet d'editer le nom du medoc via un champs "entry" et son prix
+            Selectionne le nom du medoc a modifier via une combobox et la lst lst_medoc_name généré au début de programme
+            Actualise le nom de l'objet dans la liste medicaments.lst_medic
+            Modifie le nom dans la liste lst_medoc_name
+                Pour le dynamisme de la liste Combobox, si le nom est modifié :
+                    - Ferme la fenêtre et la regénère
+            Modifie le prix unitaire
+            Sauvegarde et fait un retour console
+
+        """
+    old_name = win_edit_medoc_old_name_cbbox.get()
+    new_name = win_edit_medoc_new_name_entry.get()
+    new_price = int(win_edit_medoc_new_price_spinbx.get())
+    ok, medoc = controls_entry.verif_name(old_name, medicaments.lst_medic)
+    var_transit = ""
+    if new_name != "":
+        medoc.name = new_name
+        controls_entry.save("medicaments", medicaments.lst_medic)
+        var_transit += f"Le medoc {old_name} a été renommé en {medoc.name}\n"
+        ind = lst_medoc_name.index(old_name)
+        lst_medoc_name[ind] = medoc.name
+    if new_price > 0:
+        medoc.price = new_price
+        var_transit += f"Le montant unitaire du medicament {medoc.name} est dorénavant de {medoc.price}"
+    var_text.set(var_transit)
+    win_edit_medoc()
+
+def add_stock():
+    """"
+    Fonction d'approvisionnement du stock d'un medicament
+
+        Selectionner le medicaments a approvisionner
+        Choisir la quantité a ajouté
+        Utilise le setter de la prop stock de la classe Medicament
+
+    """
+    medoc_name = win_add_stock_medoc_cbbox.get()
+    stock_add = int(win_add_stock_nb_spbox.get())
+
+    ok, medoc = controls_entry.verif_name(medoc_name, medicaments.lst_medic)
+    medoc.stock = stock_add
+    controls_entry.save("medicaments", medicaments.lst_medic)
+    var_text.set(f"Le stock de {medoc.name} est de {medoc.stock}")
+    controls_entry.log(f"OK : Ajout de {stock_add} boite(s) de {medoc.name}. Nouveau stock : {medoc.stock}")
+    win_add_stock_medoc_cbbox.delete(0, tkinter.END)
+    win_add_stock_nb_spbox.delete(0, tkinter.END)
+
 # ----------------------------------------------------- MAIN ------------------------------------------------------
 
 root = tkinter.Tk()
@@ -324,7 +456,6 @@ for client in clients.lst_client:
     lst_client_name.append(client.name)
 
 # --------------------------------------------------- ROOT WINDOWS ---------------------------------------------------
-
 # Definissions de la dimension et du centrage de la fenetre
 
 screen_x = root.winfo_screenwidth()
@@ -335,8 +466,6 @@ posX = (screen_x // 2 )-(windows_x //2)
 posY = (screen_y // 2)-(windows_y // 2)
 center = f"{windows_x}x{windows_y}+{posX}+{posY}"
 root.geometry(center)
-
-
 
 # Frame Console
 
@@ -363,6 +492,15 @@ buy.pack()
 edit_client = tkinter.Button(root, text="Editer client", command=win_edit_client)
 edit_client.pack()
 
+# Editer medoc
+
+edit_medoc = tkinter.Button(root, text="Editer medicament", command=win_edit_medoc)
+edit_medoc.pack()
+
+# Approvisionnement
+ajout_stock = tkinter.Button(root, text="Approvisionner stock medicament", command=win_add_stock)
+ajout_stock.pack()
+
 # listing client et crédit d'un ou tout les clients
 
 inv_button = tkinter.Button(root, text="Recherche", command=inv_client)
@@ -371,6 +509,8 @@ inv_label = tkinter.Label(root, text="*Inventaire complet si le champ est vide")
 inv_button.pack(side="left")
 inv_entry.pack(side="left")
 inv_label.pack(side="left")
+
+#TODO : Bouton quit avec askyesno
 
 # Console
 

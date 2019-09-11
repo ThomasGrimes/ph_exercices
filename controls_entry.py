@@ -1,4 +1,4 @@
-#coding:utf-8
+# coding:utf-8
 
 """
 Module de controles des entrées utilisateurs
@@ -6,6 +6,7 @@ Module de controles des entrées utilisateurs
 """
 import datetime
 import pickle
+
 
 def log(record):
     """
@@ -23,6 +24,7 @@ def log(record):
     with open("data/log.txt", "a") as file:
         file.write(f"{log_time} >>> {record}\n")
 
+
 def verif_name(name, lst):
     """
     Fonction de vérification de la présence d'un nom client ou médicament dans la liste
@@ -39,6 +41,7 @@ def verif_name(name, lst):
             return ok, obj
     return ok, "vide"
 
+
 def load_data(directory_file, lst):
     """
     Fonctions de chargement des données enregistrées dans les fichiers .data en byte
@@ -51,15 +54,17 @@ def load_data(directory_file, lst):
         Celle ci est appelé au début du programme
 
     """
+    # TODO : Thread
     try:
         with open(f"{directory_file}", "rb") as file:
             datas = pickle.Unpickler(file).load()
             for obj in datas:
                 lst.append(obj)
     except FileNotFoundError:
-        pass
+        log(f"ERREUR : Le fichier {directory_file} est introuvable")
     except EOFError:
-        pass
+        log(f"WARNING : le fichier {directory_file} ne contient aucune donnée")
+
 
 def save(file, backup_file):
     """
@@ -76,6 +81,7 @@ def save(file, backup_file):
     with open(cible, "wb") as backup:
         record = pickle.Pickler(backup)
         record.dump(backup_file)
+
 
 # --------------------------------------- TEST -------------------------------------------------
 if __name__ == '__main__':
