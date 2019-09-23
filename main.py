@@ -7,7 +7,6 @@ Données médicaments : Nom - prix - stocks
 
 """
 #TODO : Position graphique
-#TODO : Action de suppression dans la fenetre edition avec confimation
 
 # --------------------------------------------------- MODULES ---------------------------------------------------
 
@@ -115,12 +114,13 @@ def win_edit_client():
     """
     #Fenetre
     win_edit_client = tkinter.Toplevel(root)
-    win_edit_client.geometry(f"300x200+{posX}+{posY}")
+    win_edit_client.geometry(f"300x300+{posX}+{posY}")
     win_edit_client.title("Edition Client")
     # Widgets
     win_edit_client_old_name_label = tkinter.Label(win_edit_client, text="Selectionner le client a editer")
     win_edit_client_new_name_label = tkinter.Label(win_edit_client, text="Entrer le nouveau nom")
     win_edit_client_new_credit_label = tkinter.Label(win_edit_client, text="Entrer le crédit a ajouter au compte client")
+    win_edit_client_suppress_label = tkinter.Label(win_edit_client, text="Supprimer le client selectionné")
     global win_edit_client_old_name_cbbox
     win_edit_client_old_name_cbbox = ttk.Combobox(win_edit_client, value=lst_client_name)
     global win_edit_client_new_name_entry
@@ -129,6 +129,7 @@ def win_edit_client():
     win_edit_client_new_credit_spinbx = tkinter.Spinbox(win_edit_client, from_=0, to=1000)
     win_edit_client_valid = tkinter.Button(win_edit_client, text="Valider", command=lambda:[fedit_client(), win_edit_client.destroy()])
     win_edit_client_quit = tkinter.Button(win_edit_client, text="Quitter", command=win_edit_client.destroy)
+    win_edit_client_suppress = tkinter.Button(win_edit_client, text="Supprimer", command=lambda:[suppress(win_edit_client_old_name_cbbox.get()), win_edit_client.destroy()])
     # Positionnement
     win_edit_client_old_name_label.pack()
     win_edit_client_old_name_cbbox.pack()
@@ -136,6 +137,8 @@ def win_edit_client():
     win_edit_client_new_name_entry.pack()
     win_edit_client_new_credit_label.pack()
     win_edit_client_new_credit_spinbx.pack()
+    win_edit_client_suppress_label.pack()
+    win_edit_client_suppress.pack()
     win_edit_client_valid.pack()
     win_edit_client_quit.pack()
 
@@ -146,12 +149,13 @@ def win_edit_medoc():
     """
     #Fenetre
     win_edit_medoc = tkinter.Toplevel(root)
-    win_edit_medoc.geometry(f"300x200+{posX}+{posY}")
+    win_edit_medoc.geometry(f"300x300+{posX}+{posY}")
     win_edit_medoc.title("Edition medicament")
     # Widgets
     win_edit_medoc_old_name_label = tkinter.Label(win_edit_medoc, text="Selectionner le medicament a editer")
     win_edit_medoc_new_name_label = tkinter.Label(win_edit_medoc, text="Entrer le nouveau nom")
     win_edit_medoc_new_credit_label = tkinter.Label(win_edit_medoc, text="Entrer le nouveau prix du medicament")
+    win_edit_medoc_suppress_label = tkinter.Label(win_edit_medoc, text="Supprimer le medicament selectionné")
     global win_edit_medoc_old_name_cbbox
     win_edit_medoc_old_name_cbbox = ttk.Combobox(win_edit_medoc, value=lst_medoc_name)
     global win_edit_medoc_new_name_entry
@@ -160,6 +164,7 @@ def win_edit_medoc():
     win_edit_medoc_new_price_spinbx = tkinter.Spinbox(win_edit_medoc, from_=0, to=1000)
     win_edit_medoc_valid = tkinter.Button(win_edit_medoc, text="Valider", command=lambda:[fedit_medoc(), win_edit_medoc.destroy()])
     win_edit_medoc_quit = tkinter.Button(win_edit_medoc, text="Quitter", command=win_edit_medoc.destroy)
+    win_edit_medoc_suppress = tkinter.Button(win_edit_medoc, text="Supprimer", command=lambda:[suppress(win_edit_medoc_old_name_cbbox.get()), win_edit_medoc.destroy()])
     # Positionnement
     win_edit_medoc_old_name_label.pack()
     win_edit_medoc_old_name_cbbox.pack()
@@ -167,6 +172,8 @@ def win_edit_medoc():
     win_edit_medoc_new_name_entry.pack()
     win_edit_medoc_new_credit_label.pack()
     win_edit_medoc_new_price_spinbx.pack()
+    win_edit_medoc_suppress_label.pack()
+    win_edit_medoc_suppress.pack()
     win_edit_medoc_valid.pack()
     win_edit_medoc_quit.pack()
 
@@ -437,6 +444,32 @@ def add_stock():
     win_add_stock_medoc_cbbox.delete(0, tkinter.END)
     win_add_stock_nb_spbox.delete(0, tkinter.END)
 
+def suppress(obj_a_supp):
+    valid = messagebox.askyesno(title="Supprimer", message="Êtes-vous sur de vouloir supprimer ?")
+    if valid:
+        ok_client, C_obj = controls_entry.verif_name(obj_a_supp, clients.lst_client)
+        ok_medoc, M_obj = controls_entry.verif_name(obj_a_supp, medicaments.lst_medic)
+        if ok_client:
+            var_text.set(f"Le client {C_obj.name} à été supprimé")
+            controls_entry.log((f"SUPPRESSION OK : Le client {C_obj.name} a été supprimé "))
+            ind = lst_client_name.index(C_obj.name)
+            lst_client_name.pop(ind)
+            ind_Obj = clients.lst_client.index(C_obj)
+            clients.lst_client.pop(ind_Obj)
+            controls_entry.save("clients", clients.lst_client)
+            win_edit_client()
+        elif ok_medoc:
+            var_text.set(f"Le medicament {M_obj.name} à été supprimé")
+            controls_entry.log(f"SUPPRESSION OK : Le medicament {M_obj.name} a été supprimé")
+            ind = lst_medoc_name.index(M_obj.name)
+            lst_medoc_name.pop(ind)
+            indObj = medicaments.lst_medic.index(M_obj)
+            medicaments.lst_medic.pop(indObj)
+            controls_entry.save("medicaments", medicaments.lst_medic)
+            win_edit_medoc()
+        else:
+            messagebox.showerror(title="ERREUR", message="La sélection est vide")
+
 # ----------------------------------------------------- MAIN ------------------------------------------------------
 
 root = tkinter.Tk()
@@ -510,13 +543,20 @@ inv_button.pack(side="left")
 inv_entry.pack(side="left")
 inv_label.pack(side="left")
 
-#TODO : Bouton quit avec askyesno
-
 # Console
 
 var_text = tkinter.StringVar()
 console = tkinter.Message(console_frame, textvariable=var_text, bg="white", fg="red", width=500)
 var_text.trace("w", nouveau_client)
 console.pack(expand=True)
+
+# Bouton Quit
+
+def Quit():
+    if messagebox.askyesno(title="Quitter", message="Êtes-vous sur de vouloir quitter"):
+        root.quit()
+
+quit_button = tkinter.Button(root, text="Quitter", command=Quit)
+quit_button.pack(side="bottom", fill="x")
 
 root.mainloop()

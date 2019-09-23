@@ -56,3 +56,22 @@
 2019-09-11 12:26:51.128093 >>> OK : Ajout de 2 boite(s) de Medic. Nouveau stock : 12
 2019-09-11 12:26:57.311335 >>> OK : Inventaire OK
 2019-09-11 12:27:02.917912 >>> OK : Inventaire OK
+2019-09-16 10:24:16.232581 >>> OK : Inventaire OK
+2019-09-16 10:25:01.557955 >>> OK : Inventaire OK
+2019-09-16 10:31:59.675915 >>> OK : Inventaire OK
+2019-09-16 10:32:14.558077 >>> OK : Inventaire OK
+2019-09-16 10:47:35.165642 >>> OK : Inventaire OK
+2019-09-16 10:50:29.609780 >>> SUPPRESSION OK : Le medicament Medic a été supprimé
+2019-09-16 10:50:36.927873 >>> OK : Inventaire OK
+2019-09-16 10:50:48.466254 >>> OK : Medic : le stock est de 12 au prix unitaire de 5.0€
+2019-09-16 10:52:09.593596 >>> OK : Inventaire OK
+2019-09-16 10:56:26.167350 >>> SUPPRESSION OK : Le medicament Medic a été supprimé
+2019-09-16 10:56:34.391121 >>> OK : Inventaire OK
+2019-09-16 10:56:44.849130 >>> SUPPRESSION OK : Le client Toto a été supprimé 
+2019-09-16 10:57:09.680222 >>> OK : Inventaire OK
+2019-09-16 10:57:13.866819 >>> ERREUR : le client ou le medicaments "medic" n'existe pas
+2019-09-16 10:59:07.197829 >>> OK : Inventaire OK
+2019-09-16 10:59:14.940282 >>> ENREGISTREMENT OK : Toto : 15.0€
+2019-09-16 10:59:17.963750 >>> OK : Inventaire OK
+2019-09-16 10:59:38.866656 >>> SUPPRESSION OK : Le client Toto a été supprimé 
+2019-09-16 10:59:47.362131 >>> OK : Inventaire OK
