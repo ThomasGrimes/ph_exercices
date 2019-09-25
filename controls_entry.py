@@ -42,7 +42,7 @@ def verif_name(name, lst):
     return ok, "vide"
 
 
-def load_data(directory_file, lst):
+def load_data(file, lst):
     """
     Fonctions de chargement des données enregistrées dans les fichiers .data en byte
 
@@ -55,16 +55,16 @@ def load_data(directory_file, lst):
 
     """
     # TODO : Thread
-    cible =f"data/{directory_file}.data"
+    cible =f"data/{file}.data"
     try:
-        with open(cible, "rb") as file:
-            datas = pickle.Unpickler(file).load()
+        with open(cible, "rb") as data:
+            datas = pickle.Unpickler(data).load()
             for obj in datas:
                 lst.append(obj)
     except FileNotFoundError:
-        log(f"ERREUR : Le fichier {directory_file} est introuvable")
+        log(f"ERREUR : Le fichier {file} est introuvable")
     except EOFError:
-        log(f"WARNING : le fichier {directory_file} ne contient aucune donnée")
+        log(f"WARNING : le fichier {file} ne contient aucune donnée")
 
 
 def save(file, backup_file):
