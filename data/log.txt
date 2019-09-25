@@ -75,3 +75,9 @@
 2019-09-16 10:59:17.963750 >>> OK : Inventaire OK
 2019-09-16 10:59:38.866656 >>> SUPPRESSION OK : Le client Toto a été supprimé 
 2019-09-16 10:59:47.362131 >>> OK : Inventaire OK
+2019-09-24 13:44:10.955932 >>> OK : Inventaire OK
+2019-09-24 14:03:53.511166 >>> OK : Inventaire OK
+2019-09-24 14:05:49.917972 >>> OK : Inventaire OK
+2019-09-24 14:10:19.831512 >>> OK : Inventaire OK
+2019-09-25 07:18:07.055968 >>> OK : Inventaire OK
+2019-09-25 07:18:15.340810 >>> ERREUR : le client ou le medicaments "ty" n'existe pas

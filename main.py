@@ -204,6 +204,7 @@ def win_add_stock():
     win_add_stock_quit.pack()
 # --------------------------------------------------- FONCTIONS ---------------------------------------------------
 
+
 def nouveau_client():
     """
     Fonction de création d'un nouveau client :
@@ -239,6 +240,7 @@ def nouveau_client():
     finally:
         new_client_name_entry.delete(0, tkinter.END)
         new_client_credit_entry.delete(0, tkinter.END)
+
 
 def nouveau_medoc():
     """
@@ -288,6 +290,7 @@ def nouveau_medoc():
         new_medoc_price_entry.delete(0, tkinter.END)
         new_medoc_quantity_entry.delete(0, tkinter.END)
 
+
 def inv_client():
     """
     Fonction inventoriant le(s) client(s) et renvoyant l'information dans la console
@@ -324,6 +327,7 @@ def inv_client():
             var_transit += f"{medoc.name} : le stock est de {medoc.stock} au prix unitaire de {medoc.price}\n"
         var_text.set(var_transit)
         controls_entry.log("OK : Inventaire OK")
+
 
 def buy_medoc():
     """Fonction d'activation d'achat
@@ -364,6 +368,7 @@ def buy_medoc():
         win_buy_name_client_cbbox.delete(0, tkinter.END)
         win_buy_quantity_medoc_entry.delete(0, tkinter.END)
 
+
 def fedit_client():
     """Fonction d'edition client
 
@@ -393,6 +398,7 @@ def fedit_client():
         var_transit += f"{new_credit}€ ont été ajouté au crédit du client {client.name}. Son nouveau solde est de {client.credits}"
     var_text.set(var_transit)
     win_edit_client()
+
 
 def fedit_medoc():
     """Fonction d'edition d'un medicament
@@ -424,6 +430,7 @@ def fedit_medoc():
     var_text.set(var_transit)
     win_edit_medoc()
 
+
 def add_stock():
     """"
     Fonction d'approvisionnement du stock d'un medicament
@@ -443,6 +450,7 @@ def add_stock():
     controls_entry.log(f"OK : Ajout de {stock_add} boite(s) de {medoc.name}. Nouveau stock : {medoc.stock}")
     win_add_stock_medoc_cbbox.delete(0, tkinter.END)
     win_add_stock_nb_spbox.delete(0, tkinter.END)
+
 
 def suppress(obj_a_supp):
     valid = messagebox.askyesno(title="Supprimer", message="Êtes-vous sur de vouloir supprimer ?")
@@ -470,6 +478,10 @@ def suppress(obj_a_supp):
         else:
             messagebox.showerror(title="ERREUR", message="La sélection est vide")
 
+
+def quit():
+    if messagebox.askyesno(title="Quitter", message="Êtes-vous sur de vouloir quitter"):
+        root.quit()
 # ----------------------------------------------------- MAIN ------------------------------------------------------
 
 root = tkinter.Tk()
@@ -500,35 +512,35 @@ posY = (screen_y // 2)-(windows_y // 2)
 center = f"{windows_x}x{windows_y}+{posX}+{posY}"
 root.geometry(center)
 
+# Barre de Menu
+
+main_menu = tkinter.Menu(root)
+
+menu1 = tkinter.Menu(main_menu, tearoff=0)
+menu1.add_command(label="Enregistrer", command=lambda :[controls_entry.save("clients", clients.lst_client), controls_entry.save("medicaments", medicaments.lst_medic)])
+menu1.add_separator()
+menu1.add_command(label="Quitter", command=quit)
+
+menu2 = tkinter.Menu(main_menu, tearoff=0)
+menu2.add_command(label="Modifier client", command=win_edit_client)
+menu2.add_command(label="Modifier medicament", command=win_edit_medoc)
+
+menu3 = tkinter.Menu(main_menu, tearoff=0)
+menu3.add_command(label="Client", command=win_new_client)
+menu3.add_command(label="Medicament", command=win_new_medicament)
+
+main_menu.add_cascade(label="Ficher", menu=menu1)
+main_menu.add_cascade(label="Editer", menu=menu2)
+main_menu.add_cascade(label="Nouveau", menu=menu3)
+
 # Frame Console
 
 console_frame = tkinter.LabelFrame(root, text="Console", labelanchor="n", bg="white")
-console_frame.pack(side="bottom", expand=True, padx=15, pady=15, ipadx=5, ipady=5, fill="both")
-
-# Bouton pour création nouveau client
-
-new_client = tkinter.Button(root, text="Nouveau client", command = win_new_client)
-new_client.pack()
-
-# Bouton pour création nouveau medicaments
-
-new_medoc = tkinter.Button(root, text="Nouveau medicaments", command = win_new_medicament)
-new_medoc.pack()
 
 # Bouton achat
 
 buy = tkinter.Button(root, text="Achat", command=win_buy)
 buy.pack()
-
-# Editer Client
-
-edit_client = tkinter.Button(root, text="Editer client", command=win_edit_client)
-edit_client.pack()
-
-# Editer medoc
-
-edit_medoc = tkinter.Button(root, text="Editer medicament", command=win_edit_medoc)
-edit_medoc.pack()
 
 # Approvisionnement
 ajout_stock = tkinter.Button(root, text="Approvisionner stock medicament", command=win_add_stock)
@@ -539,9 +551,9 @@ ajout_stock.pack()
 inv_button = tkinter.Button(root, text="Recherche", command=inv_client)
 inv_entry = tkinter.Entry(root)
 inv_label = tkinter.Label(root, text="*Inventaire complet si le champ est vide")
-inv_button.pack(side="left")
-inv_entry.pack(side="left")
-inv_label.pack(side="left")
+inv_entry.pack()
+inv_button.pack()
+inv_label.pack()
 
 # Console
 
@@ -552,11 +564,10 @@ console.pack(expand=True)
 
 # Bouton Quit
 
-def Quit():
-    if messagebox.askyesno(title="Quitter", message="Êtes-vous sur de vouloir quitter"):
-        root.quit()
-
-quit_button = tkinter.Button(root, text="Quitter", command=Quit)
+quit_button = tkinter.Button(root, text="Quitter", command=quit)
 quit_button.pack(side="bottom", fill="x")
 
+console_frame.pack(side="bottom", expand=True, padx=15, pady=15, ipadx=5, ipady=5, fill="both")
+
+root.config(menu=main_menu)
 root.mainloop()
