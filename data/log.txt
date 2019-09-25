@@ -81,3 +81,11 @@
 2019-09-24 14:10:19.831512 >>> OK : Inventaire OK
 2019-09-25 07:18:07.055968 >>> OK : Inventaire OK
 2019-09-25 07:18:15.340810 >>> ERREUR : le client ou le medicaments "ty" n'existe pas
+2019-09-25 08:02:08.214698 >>> OK : Inventaire OK
+2019-09-25 08:16:30.213412 >>> OK : Inventaire OK
+2019-09-25 08:16:42.437460 >>> ENREGISTREMENT OK : Toto : 15.0€
+2019-09-25 08:18:49.525615 >>> OK : Inventaire OK
+2019-09-25 08:19:01.449489 >>> ENREGISTREMENT OK : Toto : 15.0€
+2019-09-25 08:19:32.925269 >>> OK : Inventaire OK
+2019-09-25 08:36:44.084546 >>> OK : Inventaire OK
+2019-09-25 08:38:45.657568 >>> ERREUR : Valeur invalide

@@ -55,8 +55,9 @@ def load_data(directory_file, lst):
 
     """
     # TODO : Thread
+    cible =f"data/{directory_file}.data"
     try:
-        with open(f"{directory_file}", "rb") as file:
+        with open(cible, "rb") as file:
             datas = pickle.Unpickler(file).load()
             for obj in datas:
                 lst.append(obj)

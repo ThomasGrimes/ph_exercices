@@ -14,9 +14,7 @@ import tkinter
 from tkinter import messagebox
 from tkinter import ttk
 #import des modules customs
-import clients
-import medicaments
-import controls_entry
+import clients, medicaments, controls_entry
 
 # --------------------------------------------------- WINDOWS ---------------------------------------------------
 
@@ -229,7 +227,7 @@ def nouveau_client():
         clients.lst_client.append(client)
         lst_client_name.append(client.name)
         controls_entry.log(f"ENREGISTREMENT OK : {client.name} : {client.credits}")
-        controls_entry.save("clients", clients.lst_client)
+        controls_entry.save(*file_clients)
         var_text.set(f"Le client {client.name} a bien été créé. Son crédit est de {client.credits}")
     except ValueError:
         messagebox.showerror(title="Erreur", message="Valeur invalide")
@@ -274,7 +272,7 @@ def nouveau_medoc():
         medicaments.lst_medic.append(medoc)
         lst_medoc_name.append(medoc.name)
         controls_entry.log(f"ENREGISTREMENT OK : {medoc.name} :  prix - {medoc.price} / stock - {medoc.stock}")
-        controls_entry.save("medicaments", medicaments.lst_medic)
+        controls_entry.save(*file_medicaments)
         var_text.set(f"Le medicament \"{medoc.name}\" a bien été créé. Son stock est de {medoc.stock} au prix unitaire de {medoc.price}")
     except ValueError:
         messagebox.showerror(title="Erreur", message="La valeur du stock ne peut être négative")
@@ -389,7 +387,7 @@ def fedit_client():
     var_transit = ""
     if new_name != "":
         client.name = new_name
-        controls_entry.save("clients", clients.lst_client)
+        controls_entry.save(*file_clients)
         var_transit += f"Le client {old_name} a été renommé en {client.name}\n"
         ind = lst_client_name.index(old_name)
         lst_client_name[ind] = client.name
@@ -420,7 +418,7 @@ def fedit_medoc():
     var_transit = ""
     if new_name != "":
         medoc.name = new_name
-        controls_entry.save("medicaments", medicaments.lst_medic)
+        controls_entry.save(*file_medicaments)
         var_transit += f"Le medoc {old_name} a été renommé en {medoc.name}\n"
         ind = lst_medoc_name.index(old_name)
         lst_medoc_name[ind] = medoc.name
@@ -445,7 +443,7 @@ def add_stock():
 
     ok, medoc = controls_entry.verif_name(medoc_name, medicaments.lst_medic)
     medoc.stock = stock_add
-    controls_entry.save("medicaments", medicaments.lst_medic)
+    controls_entry.save(*file_medicaments)
     var_text.set(f"Le stock de {medoc.name} est de {medoc.stock}")
     controls_entry.log(f"OK : Ajout de {stock_add} boite(s) de {medoc.name}. Nouveau stock : {medoc.stock}")
     win_add_stock_medoc_cbbox.delete(0, tkinter.END)
@@ -464,7 +462,7 @@ def suppress(obj_a_supp):
             lst_client_name.pop(ind)
             ind_Obj = clients.lst_client.index(C_obj)
             clients.lst_client.pop(ind_Obj)
-            controls_entry.save("clients", clients.lst_client)
+            controls_entry.save(*file_clients)
             win_edit_client()
         elif ok_medoc:
             var_text.set(f"Le medicament {M_obj.name} à été supprimé")
@@ -473,7 +471,7 @@ def suppress(obj_a_supp):
             lst_medoc_name.pop(ind)
             indObj = medicaments.lst_medic.index(M_obj)
             medicaments.lst_medic.pop(indObj)
-            controls_entry.save("medicaments", medicaments.lst_medic)
+            controls_entry.save(*file_medicaments)
             win_edit_medoc()
         else:
             messagebox.showerror(title="ERREUR", message="La sélection est vide")
@@ -489,8 +487,11 @@ root.title("Pharma Gestion")
 
 # --------------------------------------------------- LOAD DATA ---------------------------------------------------
 
-controls_entry.load_data("data/clients.data", clients.lst_client)
-controls_entry.load_data("data/medicaments.data", medicaments.lst_medic)
+file_medicaments = ("medicaments", medicaments.lst_medic)
+file_clients = ("clients", clients.lst_client)
+
+controls_entry.load_data(*file_clients)
+controls_entry.load_data(*file_medicaments)
 
 lst_medoc_name = []
 for medoc in medicaments.lst_medic:
@@ -517,7 +518,7 @@ root.geometry(center)
 main_menu = tkinter.Menu(root)
 
 menu1 = tkinter.Menu(main_menu, tearoff=0)
-menu1.add_command(label="Enregistrer", command=lambda :[controls_entry.save("clients", clients.lst_client), controls_entry.save("medicaments", medicaments.lst_medic)])
+menu1.add_command(label="Enregistrer", command=lambda:[controls_entry.save(*file_clients), controls_entry.save(*file_medicaments)])
 menu1.add_separator()
 menu1.add_command(label="Quitter", command=quit)
 
